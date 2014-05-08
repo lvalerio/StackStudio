@@ -33,7 +33,6 @@
     </table>
     <div id="details" class="detail_panel"></div>
 </div>
-
 <script type="text/html" id="resource_detail">
     <div id="detail_tabs">
         <ul>
@@ -42,60 +41,82 @@
             <li><a href="#associations_tab">Associations</a></li>
         </ul>
         <div id="inbound_tab" class="tab">
-            <form>
-                Create a new rule: <select></select>
-                Rule #: <input />
-                Port range: <input />
-                Source: <input />
-                Allow/Deny: <select></select>
-            </form>
-            <table id="inbound_table" class="display_table">
-                <thead>
-                    <tr>
-                        <th>Rule #</th>
-                        <th>Port (Service)</th>
-                        <th>Protocol</th>
-                        <th>Source</th>
-                        <th>Allow/Deny</th>
-                    </tr>
-                </thead>            
-                <tbody></tbody>
-                <tfoot></tfoot>
-            </table>         
+            <div class="row">
+                <div class="col-lg-5">
+                    <form>
+                        <fieldset>
+                            <legend>Inbound Rules Ingress</legend>
+                            <button id="add_rule_button" class="add-button">Add Rule</button>
+                            <button id="remove_rule_button" class="remove-button">Remove Rule</button>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="col-lg-7">
+                    <table id="inbound_table" cellpadding="0" cellspacing="0" border="0" class="sub-table table table-striped table-bordered AWS">
+                        <thead>
+                            <tr>
+                                <th>Rule #</th>
+                                <th>Type</th>
+                                <th>Protocol</th>
+                                <th>Port Range/ ICMP Type</th>
+                                <th>Source</th>
+                                <th>Rule Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>  
         </div>
-        <div id="outbound_tab">
-            <form>
-                Create a new rule: <select></select>
-                Rule #: <input />
-                Port range: <input />
-                Destination: <input />
-                Allow/Deny: <select></select>
-            </form>            
-            <table id="outbound_table" class="display_table">
-                <thead>
-                    <tr>
-                        <th>Rule #</th>
-                        <th>Port (Service)</th>
-                        <th>Protocol</th>
-                        <th>Destination</th>
-                        <th>Allow/Deny</th>
-                    </tr>
-                </thead>            
-                <tbody></tbody>
-                <tfoot></tfoot>
-            </table>
+        <div id="outbound_tab" class="tab">
+            <div class="row">
+                <div class="col-lg-5">
+                    <form>
+                        <fieldset>
+                            <legend> Outbound Rules Ingress</legend>
+                            <button id="add_rule_button" class="add-button">Add Rule</button>
+                            <button id="remove_rule_button" class="remove-button">Remove Rule</button>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="col-lg-7">
+                    <table id="outbound_table" cellpadding="0" cellspacing="0" border="0" class="sub-table table table-striped table-bordered AWS">
+                        <thead>
+                            <tr>
+                                <th>Rule #</th>
+                                <th>Type</th>
+                                <th>Protocol</th>
+                                <th>Port Range/ ICMP Type</th>
+                                <th>Source</th>
+                                <th>Rule Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>      
         </div>
-        <div id="associations_tab">
-            <table class="display_table">
-                <thead>
-                    <tr>
-                        <th>Subnet</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>            
-                <tbody></tbody>
-                <tfoot></tfoot>
-            </table>         
+        <div id="associations_tab" class="tab">
+            <div class="row">
+                <div class="col-lg-5">
+                    <form>
+                        <fieldset>
+                            <legend> Associations Ingress</legend>
+                            <button id="add_association_button">Associate</button>
+                            <button id="remove_association_button" class="remove-button">Disassociate</button>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="col-lg-7">
+                    <table id="associations_table" cellpadding="0" cellspacing="0" border="0" class="sub-table table table-striped table-bordered AWS">
+                        <thead>
+                            <tr>
+                                <th>Association ID</th>
+                                <th>Network ACL ID</th>
+                                <th>Subnet ID</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>  
         </div>
     </div>
 </script>

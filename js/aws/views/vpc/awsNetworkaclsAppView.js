@@ -77,6 +77,41 @@ define([
         toggleActions: function(e) {
             //Disable any needed actions
             this.networkAcl = this.collection.get(this.selectedId);
+            this.addSubTableElements();
+            // debugger
+        },
+
+        addSubTableElements: function(){
+            var model = this.networkAcl;
+            $(".sub-table").dataTable().fnClearTable();
+            $.each(model.attributes, function(attribute,value) {
+                if(attribute === "entries"){
+                    $.each(value,function(i,rule){
+                        var protocol = -1;
+                        if(rule.protocol === -1){
+                            protocol = "All";
+                        }else{
+                            protocol = rule.protocol;
+                        }
+                        var rowData = [rule.ruleNumber, rule.icmpTypeCode, protocol, rule.portRange, rule.cidrBlock, rule.ruleAction ];
+                        if(rule.egress){
+                            $("#outbound_table").dataTable().fnAddData(rowData);
+                        }else{
+                            $("#inbound_table").dataTable().fnAddData(rowData);
+                        }
+                    });
+                }
+                else if(attribute === "associations"){
+                    $.each(value,function(i,association){
+                        var hasSubnet = "none";
+                        if(association.subnetId){
+                            hasSubnet = association.subnetId;
+                        }
+                        var rowData = [association.networkAclAssociationId,association.networkAclId,hasSubnet];
+                        $("#associations_table").dataTable().fnAddData(rowData);
+                    });
+                }
+            });
         },
 
         toggleButton: function(target, toggle){
