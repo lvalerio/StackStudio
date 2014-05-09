@@ -14,11 +14,12 @@ define([
         '/js/aws/models/vpc/awsNetworkAcl.js',
         '/js/aws/collections/vpc/awsNetworkAcls.js',
         '/js/aws/views/vpc/awsNetworkAclCreateView.js',
+        '/js/aws/views/vpc/awsNetworkAclAddRuleView.js',
         '/js/views/featureNotImplementedDialogView.js',
         'icanhaz',
         'common',
         'jquery.dataTables'
-], function( $, _, Backbone, AppView, awsNetworkAclAppTemplate, NetworkAcl, NetworkAcls, awsNetworkAclCreateView, FeatureNotImplementedDialogView, ich, Common ) {
+], function( $, _, Backbone, AppView, awsNetworkAclAppTemplate, NetworkAcl, NetworkAcls, awsNetworkAclCreateView, NetworkAclAddRuleView, FeatureNotImplementedDialogView, ich, Common ) {
     'use strict';
 
     // Aws NetworkAcl Application View
@@ -55,7 +56,13 @@ define([
         events: {
             'click .create_button': 'createNew',
             'click #action_menu ul li': 'performAction',
-            'click #resource_table tr': 'clickOne'
+            'click #resource_table tr': 'clickOne',
+            'click .add-button': 'featureNotImplemented', //Remove when feture is implemented.
+            'click .remove-button': 'featureNotImplemented',
+            'click #detail_tabs li': 'changeTab',
+            // 'click #add_rule_button' : 'addRule',
+            'click .sub-table tr': 'selectTableRow'
+            // 'click #remove_rule_button' : 'removeRule'
         },
 
         initialize: function(options) {
@@ -78,8 +85,15 @@ define([
             //Disable any needed actions
             this.networkAcl = this.collection.get(this.selectedId);
             this.addSubTableElements();
-            // debugger
+            this.toggleButton(".remove-button",true);
         },
+
+        changeTab: function(event) {
+            //Disable any needed actions when switching tabs.
+            this.toggleButton(".remove-button",true);
+            $(".sub-table tr").removeClass('row_selected');
+        },
+
 
         addSubTableElements: function(){
             var model = this.networkAcl;
@@ -126,6 +140,7 @@ define([
         },
 
         toggleButton: function(target, toggle){
+            target = $(target);
             if(toggle === true){
                 target.attr("disabled", true);
                 target.addClass("ui-state-disabled");
@@ -144,7 +159,38 @@ define([
                 networkAcl.destroy(this.credentialId, this.region);
                 break;
             }
+        },
+
+        selectTableRow: function(event){
+            var target = event.currentTarget;
+
+            if(!($(target).children().hasClass("sorting"))){
+                $(".sub-table tr").removeClass('row_selected');
+                $(target).addClass('row_selected');
+                this.toggleButton(".remove-button",false);
+            }
+        },
+
+        //TODO Link this functin to the UI and Backend when ready.
+        addRule: function(event) {
+            var thisView = this;
+
+            new NetworkAclAddRuleView({networkAcl: thisView.networkAcl, cred_id: thisView.credentialId , region: thisView.region});
+        },
+
+        removeRule: function(event) {
+            var thisView = this;
+            var selectedRow = $(".sub-table .row_selected");
+            var selectedTable = selectedRow.parents("table").dataTable();
+            //TODO Make call to Cloud Mux to delete the rule.
+        },
+
+        //Remove once features have been implemented.
+        featureNotImplemented: function(){
+            var thisView = this;
+            new FeatureNotImplementedDialogView({feature_url: "https://github.com/TranscendComputing/StackStudio/issues/13"});
         }
+
 
     });
     

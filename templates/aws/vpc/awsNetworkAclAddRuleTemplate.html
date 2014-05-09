@@ -1,0 +1,41 @@
+<div id="network_acl_add_rule">
+    <div>
+        <p>
+            Rules are used to control traffic in and out of your subnet. They are an extra
+            layer of security around your VPC.
+
+            Specify below the parameters you wish to use to limit traffic.   
+        </p>
+        <table>
+            <tr>
+                <td style="width:150px;"><b>Rule Number:</b></td>
+                <td>
+                    <input id="rule_number_input" type="text" style="width:200px;"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:150px;"><b>Protocol:</b></td>
+                <td>
+                    <input id="protocol_input" type="text" style="width:200px;"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:150px;"><b>Rule Action:</b></td>
+                <td>
+                    <input id="rule_action_input" type="text" style="width:200px;"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:150px;"><b>CIDR Range:</b></td>
+                <td>
+                    <input id="cidr_block_input" type="text" style="width:200px;"/>
+                </td>
+            </tr>
+            <tr id="options_input" style="display:none;">
+                <td id="options_name_input" style="width:150px;"><b></b></td>
+                <td id="options_content_input">
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
