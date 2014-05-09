@@ -88,12 +88,23 @@ define([
                 if(attribute === "entries"){
                     $.each(value,function(i,rule){
                         var protocol = -1;
+                        var type = "";
+                        var portRangeOrIcmpType = "";
                         if(rule.protocol === -1){
                             protocol = "All";
+                            type = protocol + " Traffic";
+                            portRangeOrIcmpType = protocol;
                         }else{
                             protocol = rule.protocol;
+                            type = protocol;
+                        
+                            if(protocol === 1){
+                                portRangeOrIcmpType = "ICMP: Code: " + rule.icmpTypeCode.code + " Type: " + rule.icmpTypeCode.type;
+                            }else if (protocol === 6 || protocol === 17) {
+                                portRangeOrIcmpType = "Port Range: From: " + rule.portRange.from + " To: " + rule.portRange.to;
+                            }
                         }
-                        var rowData = [rule.ruleNumber, rule.icmpTypeCode, protocol, rule.portRange, rule.cidrBlock, rule.ruleAction ];
+                        var rowData = [rule.ruleNumber, type, protocol, portRangeOrIcmpType, rule.cidrBlock, rule.ruleAction ];
                         if(rule.egress){
                             $("#outbound_table").dataTable().fnAddData(rowData);
                         }else{
